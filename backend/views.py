@@ -7,8 +7,9 @@ from django.views.decorators.csrf import csrf_protect
 from .models import Product, Price
 from fastcart.models import Cart, CartManager
 
+
 @csrf_protect
-def view_cart(request):  
+def view_cart(request):
     # cart = request.session.get("cart", None)
     product_list =  list(Product.objects.all())
     # cartManager = CartManager()
@@ -16,13 +17,10 @@ def view_cart(request):
     cart = Cart()
     cart.save()
 
-    price_dict = {}
     for product in product_list:
-    	cart.add(product)
+        cart.add(product)
         # price_dict('product_id') = price.product.id
         # price_list = Price.objects.filter(product__in=product_li
-
-
     cart.save()
     # for item in cart.get_items():
     #     config_list = item.get_config_type_list()

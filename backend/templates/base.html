@@ -62,9 +62,10 @@
            total_price = 0;
            $(".quantity_text").each(function()
             {
-              checkbox_id = "#cb_"+$(this).attr("item_id");
-              if($(checkbox_id)[0].checked==true){
-                total_price += parseInt($(this).val()) * parseFloat($(this).attr("data_price"));
+              item_id = $(this).attr("item_id")
+              if($("#cb_"+item_id)[0].checked==true){
+                unit_price = $("#se_"+item_id).find("option:selected").attr('data_unit_price');
+                total_price += parseInt($(this).val()) * parseFloat(unit_price);
             }
 
             });
@@ -105,10 +106,25 @@
                           <td>{{item.product.name}}</td>  
                           <td>{{item.product.brand_type}}</td> 
                           <td>
-                          <select>
+                          <select id="se_{{item.pk}}">
                             {% for price in item.product.get_price_list %}
-                                <option value ="volvo">{{price.get_config_type_display}}</option>
+                                {% if price == item.price %}
+                                    <option data_unit_price={{price.unit_price}} value={{price.config_type}} selected="selected">{{price.get_config_type_display}}
+                                    </option>
+                                {% else %}
+                                    <option data_unit_price={{price.unit_price}} value={{price.config_type}} >{{price.get_config_type_display}}
+                                    </option>
+                                {% endif %}
                             {% endfor %}
+                            <script>
+                                $("#se_{{item.pk}}").change(function(){
+                                  caculate_totoal_price();
+                                  unit_price = parseFloat($("#se_{{item.pk}}").find("option:selected").attr('data_unit_price')).toFixed(2);
+                                  $("#unit_price_{{item.pk}}").text(unit_price);
+
+                                });
+
+                            </script>
                           </select>
                           </td>
                           <td>   
@@ -119,7 +135,7 @@
                                 <input type='button' class='add' onClick="add('quantity_{{item.pk}}')" value='+' >
 
                           </td>
-                          <td>{{item.product.get_price_list[0].unit_price}}</td>  
+                          <td id="unit_price_{{item.pk}}">{{item.unit_price}}</td>  
                         </tr>  
                       {% endfor %}  
                         <tr>  
