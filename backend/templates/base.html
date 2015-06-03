@@ -35,12 +35,17 @@
 
              });
 
-
-   
-
       });
 
+      function quantity_text_change(id){
+        value = $("#"+id).val().replace(/[^\d]/g,'')
+        $("#"+id).val(value);
+        if ($("#"+id).val() <= 0 || $("#"+id).val() == "") {
+          $("#"+id).val(1);
+        }
+        caculate_totoal_price();
 
+      }
       function sub(quantity_id){
           var n=$("#"+quantity_id).val();
           var num=parseInt(n)-1;
@@ -129,8 +134,7 @@
                           </td>
                           <td>   
                                 <input type='button' class="sub"  value='-' onClick="sub('quantity_{{item.pk}}')">
-                                <input class='quantity_text' item_id="{{item.pk}}" data_price="{{item.product.price}}" id="quantity_{{item.pk}}" name="quantity" 
-                                value="{{ item.quantity }}" onkeyup="value=value.replace(/[^\d]/g,'')" 
+                                <input class='quantity_text' item_id="{{item.pk}}" data_price="{{item.product.price}}" id="quantity_{{item.pk}}" name="quantity" onkeyup="quantity_text_change('quantity_{{item.pk}}')" value="{{ item.quantity }}" 
                                 onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
                                 <input type='button' class='add' onClick="add('quantity_{{item.pk}}')" value='+' >
 
@@ -150,10 +154,9 @@
                       
           
                   </div>  
-                  <div class="span4">  
-                    <p><a class="btn primary span2" href="#">继续购物</a></a> </p>  
-                    <p><a class="btn danger span2" href="#">清空购物车</a></p>  
-                    <p><a class="btn success span2" href="#">结算</a> </p>  
+                  <div class="submit">  
+                    <input type="submit" value="保存"> 
+                    <input type="button" value="电话咨询">
                       
                   </div>  
                 </div>  
