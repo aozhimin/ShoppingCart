@@ -102,3 +102,10 @@ STATIC_ROOT = '/var/wwwroot/miaowu/static'
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
+ENVIRONMENT_SETTING_FILE = '/etc/django.miaowu.settings_local.py'
+
+
+try:
+    execfile(ENVIRONMENT_SETTING_FILE)
+except:
+    print "!!! Load ENVIRONMENT_SETTING_FILE error !!!"
