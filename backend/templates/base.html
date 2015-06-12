@@ -11,7 +11,12 @@
     <title>配置单计算器</title>
     <link rel="stylesheet" type="text/css" href="{% static 'wap/css/hunting_doctor/main.css' %}"/>
     <script src="http://libs.baidu.com/jquery/1.10.0/jquery.js"></script>
+  <style>
+    .brand_type { 
+      width:50%;
+    }
 
+</style>
   <script>
       $(document).ready(function(){
       //     $(".add").click(function(){
@@ -109,7 +114,7 @@
                         <tr> 
                           <th><input id="cb_{{item.pk}}" class="cb" type='checkbox' checked="ture"></th> 
                           <td>{{item.product.name}}</td>  
-                          <td>{{item.product.brand_type}}</td> 
+                          <td class="brand_type">{{item.product.brand_type}}</td> 
                           <td>
                           <select id="se_{{item.pk}}">
                             {% for price in item.product.get_price_list %}
